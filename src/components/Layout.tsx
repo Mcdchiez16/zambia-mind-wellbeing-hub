@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChartBar, HeartPulse, Map, Menu, X, Brain, Quote, Star } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ThemeToggle from "@/components/ThemeToggle";
 
 // Motivational quotes array
 const quotes = [
@@ -69,17 +71,17 @@ const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b bg-white sticky top-0 z-30 shadow-sm">
+    <div className="min-h-screen flex flex-col dark:bg-gray-950 transition-colors">
+      <header className="border-b bg-gradient-to-r from-indigo-600 to-purple-700 dark:from-indigo-900 dark:to-purple-950 text-white sticky top-0 z-30 shadow-md">
         <div className="container mx-auto px-4">
           {/* Motivational Quote Banner */}
           <div 
-            className={`bg-gradient-to-r from-blue-50 to-purple-50 border-b border-blue-100 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
+            className={`bg-gradient-to-r from-indigo-700/70 to-purple-800/70 dark:from-indigo-800/70 dark:to-purple-900/70 backdrop-blur-md border-b border-white/10 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
           >
             <div className="flex items-center justify-center text-sm">
-              <Quote className="h-3 w-3 text-blue-500 mr-2 flex-shrink-0" />
-              <p className="text-gray-700 italic">
-                "{currentQuote.text}" <span className="text-blue-600 not-italic">— {currentQuote.author}</span>
+              <Quote className="h-3 w-3 text-indigo-200 mr-2 flex-shrink-0" />
+              <p className="text-white/90 italic">
+                "{currentQuote.text}" <span className="text-indigo-200 not-italic">— {currentQuote.author}</span>
               </p>
             </div>
           </div>
@@ -88,10 +90,10 @@ const Layout = () => {
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <div className="text-white font-bold text-xl flex items-center">
-                  <span className="bg-gradient-to-r from-blue-700 to-purple-700 p-2 rounded-lg mr-2 flex items-center justify-center shadow-lg">
-                    <Brain className="h-5 w-5" />
+                  <span className="bg-white p-2 rounded-lg mr-2 flex items-center justify-center shadow-lg">
+                    <Brain className="h-5 w-5 text-indigo-700 dark:text-indigo-800" />
                   </span>
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-purple-700">
+                  <span className="text-white">
                     Zambia Mind
                   </span>
                 </div>
@@ -106,8 +108,8 @@ const Layout = () => {
                   to={item.path}
                   className={`flex items-center text-sm font-medium rounded-full px-4 py-2 transition-all duration-300 ${
                     isActive(item.path)
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-white text-indigo-700 dark:bg-indigo-900 dark:text-white shadow-md"
+                      : "text-white hover:bg-white/10"
                   }`}
                 >
                   <span className={`mr-2 ${isActive(item.path) ? "animate-pulse" : ""}`}>{item.icon}</span>
@@ -119,26 +121,32 @@ const Layout = () => {
                   )}
                 </Link>
               ))}
+              <div className="ml-2">
+                <ThemeToggle />
+              </div>
             </nav>
 
             {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="h-6 w-6 text-gray-700" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700" />
-              )}
-            </button>
+            <div className="flex items-center md:hidden space-x-2">
+              <ThemeToggle />
+              <button
+                className="p-2"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6 text-white" />
+                ) : (
+                  <Menu className="h-6 w-6 text-white" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMobile && isMenuOpen && (
-          <div className="fixed inset-0 top-16 bg-gradient-to-b from-white to-blue-50 z-20 p-4">
+          <div className="fixed inset-0 top-16 bg-gradient-to-b from-indigo-700 to-purple-800 dark:from-indigo-900 dark:to-purple-950 z-20 p-4">
             <nav className="flex flex-col space-y-4">
               {navigationItems.map((item) => (
                 <Link
@@ -146,8 +154,8 @@ const Layout = () => {
                   to={item.path}
                   className={`flex items-center p-4 rounded-lg shadow-sm ${
                     isActive(item.path)
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                      : "bg-white text-gray-700 hover:bg-gray-50"
+                      ? "bg-white text-indigo-700 dark:bg-gray-800 dark:text-white"
+                      : "bg-indigo-600/50 text-white hover:bg-indigo-600/70 dark:bg-indigo-800/50 dark:hover:bg-indigo-800/70"
                   }`}
                 >
                   <span className="mr-3">{item.icon}</span>
@@ -163,8 +171,8 @@ const Layout = () => {
         <Outlet />
       </main>
 
-      {/* Keep existing footer code */}
-      <footer className="bg-gray-900 text-white py-8">
+      {/* Footer */}
+      <footer className="bg-gray-900 dark:bg-black text-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>

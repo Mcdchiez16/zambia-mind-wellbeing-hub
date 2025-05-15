@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { AlertTriangle, Download, RefreshCw, TrendingDown, TrendingUp, Users, Clock, Brain, BarChart, Activity } from "lucide-react";
+import { AlertTriangle, Download, RefreshCw, TrendingDown, TrendingUp, Users, Clock, Brain, BarChart, Activity, MessageSquare } from "lucide-react";
 import SentimentChart from "@/components/charts/SentimentChart";
 import KeywordCloud from "@/components/charts/KeywordCloud";
 import EmotionDistribution from "@/components/charts/EmotionDistribution";
@@ -190,7 +189,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center">
-                  <Map className="mr-2 h-5 w-5 text-green-500" />
+                  <Activity className="mr-2 h-5 w-5 text-green-500" />
                   Regional Mental Health Map
                 </CardTitle>
                 <CardDescription>

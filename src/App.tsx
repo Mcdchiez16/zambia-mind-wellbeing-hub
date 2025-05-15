@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 
+// Create a client
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -20,7 +21,7 @@ const App = () => (
     <ThemeProvider defaultTheme="light">
       <TooltipProvider>
         <Toaster />
-        <Sonner />
+        <Sonner position="bottom-right" className="toaster-custom" />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>

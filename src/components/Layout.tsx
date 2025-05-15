@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChartBar, HeartPulse, Map, Users, Menu, X } from "lucide-react";
+import { ChartBar, HeartPulse, Map, Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Layout = () => {
@@ -31,11 +31,6 @@ const Layout = () => {
       path: "/resources",
       icon: <Map className="h-5 w-5" />,
     },
-    {
-      name: "Admin",
-      path: "/admin",
-      icon: <Users className="h-5 w-5" />,
-    },
   ];
 
   const isActive = (path: string) => {
@@ -44,11 +39,12 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b bg-white sticky top-0 z-30">
+      <header className="border-b bg-white sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <div className="text-blue-700 font-bold text-xl">
+              <div className="text-blue-700 font-bold text-xl flex items-center">
+                <span className="bg-blue-700 text-white p-1 rounded-md mr-2">ZM</span>
                 Zambia Mind
               </div>
             </Link>
@@ -60,7 +56,7 @@ const Layout = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center text-sm font-medium ${
+                className={`flex items-center text-sm font-medium transition-colors ${
                   isActive(item.path)
                     ? "text-blue-700"
                     : "text-gray-600 hover:text-blue-700"

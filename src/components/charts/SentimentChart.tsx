@@ -1,6 +1,7 @@
 
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Fragment } from "react";
 
 interface SentimentChartProps {
   timeRange: "day" | "week" | "month";
@@ -60,57 +61,60 @@ const SentimentChart = ({ timeRange }: SentimentChartProps) => {
 
   return (
     <ChartContainer config={sentimentConfig} className="h-full w-full">
-      <ChartTooltip content={<ChartTooltipContent />} />
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          data={data}
-          margin={{
-            top: 5,
-            right: 5,
-            left: 5,
-            bottom: 5,
-          }}
-        >
-          <XAxis 
-            dataKey="name" 
-            tickLine={false}
-            axisLine={false}
-            tick={{ fontSize: 12 }}
-          />
-          <YAxis 
-            tickLine={false}
-            axisLine={false}
-            tick={{ fontSize: 12 }}
-            domain={[0, 100]}
-            tickFormatter={(value) => `${value}%`}
-          />
-          <Area
-            type="monotone"
-            dataKey="positive"
-            stackId="1"
-            stroke="var(--color-positive)"
-            fill="var(--color-positive)"
-            fillOpacity={0.6}
-          />
-          <Area
-            type="monotone"
-            dataKey="neutral"
-            stackId="1"
-            stroke="var(--color-neutral)"
-            fill="var(--color-neutral)"
-            fillOpacity={0.6}
-          />
-          <Area
-            type="monotone"
-            dataKey="negative"
-            stackId="1"
-            stroke="var(--color-negative)"
-            fill="var(--color-negative)"
-            fillOpacity={0.6}
-          />
-          <ChartLegend content={<ChartLegendContent />} />
-        </AreaChart>
-      </ResponsiveContainer>
+      {/* Fix for type error: wrap contents in a Fragment to make it a single React element */}
+      <Fragment>
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={data}
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 5,
+            }}
+          >
+            <XAxis 
+              dataKey="name" 
+              tickLine={false}
+              axisLine={false}
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis 
+              tickLine={false}
+              axisLine={false}
+              tick={{ fontSize: 12 }}
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}%`}
+            />
+            <Area
+              type="monotone"
+              dataKey="positive"
+              stackId="1"
+              stroke="var(--color-positive)"
+              fill="var(--color-positive)"
+              fillOpacity={0.6}
+            />
+            <Area
+              type="monotone"
+              dataKey="neutral"
+              stackId="1"
+              stroke="var(--color-neutral)"
+              fill="var(--color-neutral)"
+              fillOpacity={0.6}
+            />
+            <Area
+              type="monotone"
+              dataKey="negative"
+              stackId="1"
+              stroke="var(--color-negative)"
+              fill="var(--color-negative)"
+              fillOpacity={0.6}
+            />
+            <ChartLegend content={<ChartLegendContent />} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </Fragment>
     </ChartContainer>
   );
 };

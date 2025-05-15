@@ -5,18 +5,20 @@ import { Badge } from "@/components/ui/badge";
 
 interface RegionalMapProps {
   timeRange: "day" | "week" | "month";
+  onRegionSelect?: (region: string | null) => void;
+  selectedRegion?: string | null;
 }
 
-interface RegionData {
-  id: string;
-  name: string;
-  sentiment: "high" | "medium" | "low";
-  crisisLevel: number;
-  change: "up" | "down" | "stable";
-}
-
-const RegionalMap = ({ timeRange }: RegionalMapProps) => {
+const RegionalMap = ({ timeRange, onRegionSelect, selectedRegion }: RegionalMapProps) => {
   const [regions, setRegions] = useState<RegionData[]>([]);
+
+  interface RegionData {
+    id: string;
+    name: string;
+    sentiment: "high" | "medium" | "low";
+    crisisLevel: number;
+    change: "up" | "down" | "stable";
+  }
 
   useEffect(() => {
     // Generate region data based on time range
@@ -58,6 +60,12 @@ const RegionalMap = ({ timeRange }: RegionalMapProps) => {
     }
   };
 
+  const handleRegionClick = (region: RegionData) => {
+    if (onRegionSelect) {
+      onRegionSelect(region.name === selectedRegion ? null : region.name);
+    }
+  };
+
   return (
     <div className="h-full w-full flex flex-col">
       <div className="flex-1 bg-blue-50 rounded-lg relative overflow-hidden">
@@ -71,7 +79,8 @@ const RegionalMap = ({ timeRange }: RegionalMapProps) => {
           {regions.map((region, index) => (
             <div 
               key={index}
-              className={`absolute w-4 h-4 rounded-full border-2 border-white cursor-pointer
+              className={`absolute w-6 h-6 rounded-full border-2 border-white cursor-pointer transition-all duration-300 hover:scale-110 shadow-md
+                ${selectedRegion === region.name ? 'ring-2 ring-blue-500 ring-offset-2' : ''}
                 ${region.sentiment === 'high' ? 'bg-green-500' : 
                   region.sentiment === 'medium' ? 'bg-yellow-500' : 'bg-red-500'}`}
               style={{ 
@@ -79,6 +88,7 @@ const RegionalMap = ({ timeRange }: RegionalMapProps) => {
                 left: `${20 + (index * 8)}%` 
               }}
               title={region.name}
+              onClick={() => handleRegionClick(region)}
             />
           ))}
         </div>
@@ -96,7 +106,11 @@ const RegionalMap = ({ timeRange }: RegionalMapProps) => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {regions.map((region) => (
-              <tr key={region.id} className="hover:bg-gray-50">
+              <tr 
+                key={region.id} 
+                className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedRegion === region.name ? 'bg-blue-50' : ''}`}
+                onClick={() => handleRegionClick(region)}
+              >
                 <td className="py-2">{region.name}</td>
                 <td className="py-2">
                   <Badge variant="outline" className={getSentimentColor(region.sentiment)}>

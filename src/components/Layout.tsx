@@ -1,25 +1,56 @@
-
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChartBar, HeartPulse, Map, Menu, X } from "lucide-react";
+import { ChartBar, HeartPulse, Map, Menu, X, Brain, Quote, Star } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+// Motivational quotes array
+const quotes = [
+  { text: "Mental health is not a destination, but a journey.", author: "Zambian Proverb" },
+  { text: "Every day may not be good, but there is good in every day.", author: "Unknown" },
+  { text: "You don't have to be positive all the time. It's perfectly okay to feel sad, angry or scared.", author: "Lori Deschene" },
+  { text: "Recovery is not one and done. It is a lifelong journey that takes place one day, one step at a time.", author: "Unknown" },
+  { text: "The strongest people are those who win battles we know nothing about.", author: "Unknown" },
+  { text: "Self-care is how you take your power back.", author: "Lalah Delia" },
+  { text: "There is hope, even when your brain tells you there isn't.", author: "John Green" },
+  { text: "You are not alone in this journey.", author: "Zambia Mind" }
+];
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentQuote, setCurrentQuote] = useState(quotes[0]);
+  const [showQuote, setShowQuote] = useState(false);
   const isMobile = useIsMobile();
   const location = useLocation();
 
   useEffect(() => {
     // Close mobile menu when route changes
     setIsMenuOpen(false);
+    
+    // Change quote every 20 seconds
+    const quoteInterval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      setCurrentQuote(quotes[randomIndex]);
+      setShowQuote(true);
+      
+      // Fade out quote after 15 seconds
+      setTimeout(() => setShowQuote(false), 15000);
+    }, 20000);
+    
+    // Show initial quote after 3 seconds
+    const initialTimeout = setTimeout(() => setShowQuote(true), 3000);
+    
+    return () => {
+      clearInterval(quoteInterval);
+      clearTimeout(initialTimeout);
+    };
   }, [location.pathname]);
 
   const navigationItems = [
     {
-      name: "Dashboard",
+      name: "Insights Center",
       path: "/dashboard",
-      icon: <ChartBar className="h-5 w-5" />,
+      icon: <Brain className="h-5 w-5" />,
     },
     {
       name: "Wellness",
@@ -40,64 +71,87 @@ const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-white sticky top-0 z-30 shadow-sm">
-        <div className="container mx-auto px-4 flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <div className="text-blue-700 font-bold text-xl flex items-center">
-                <span className="bg-blue-700 text-white p-1 rounded-md mr-2">ZM</span>
-                Zambia Mind
-              </div>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center text-sm font-medium transition-colors ${
-                  isActive(item.path)
-                    ? "text-blue-700"
-                    : "text-gray-600 hover:text-blue-700"
-                }`}
-              >
-                <span className="mr-2">{item.icon}</span>
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+        <div className="container mx-auto px-4">
+          {/* Motivational Quote Banner */}
+          <div 
+            className={`bg-gradient-to-r from-blue-50 to-purple-50 border-b border-blue-100 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-gray-700" />
-            ) : (
-              <Menu className="h-6 w-6 text-gray-700" />
-            )}
-          </button>
+            <div className="flex items-center justify-center text-sm">
+              <Quote className="h-3 w-3 text-blue-500 mr-2 flex-shrink-0" />
+              <p className="text-gray-700 italic">
+                "{currentQuote.text}" <span className="text-blue-600 not-italic">— {currentQuote.author}</span>
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Link to="/" className="flex items-center">
+                <div className="text-white font-bold text-xl flex items-center">
+                  <span className="bg-gradient-to-r from-blue-700 to-purple-700 p-2 rounded-lg mr-2 flex items-center justify-center shadow-lg">
+                    <Brain className="h-5 w-5" />
+                  </span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-purple-700">
+                    Zambia Mind
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center text-sm font-medium rounded-full px-4 py-2 transition-all duration-300 ${
+                    isActive(item.path)
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                      : "text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  <span className={`mr-2 ${isActive(item.path) ? "animate-pulse" : ""}`}>{item.icon}</span>
+                  <span>{item.name}</span>
+                  {isActive(item.path) && (
+                    <span className="ml-2">
+                      <Star className="h-3 w-3 fill-current" />
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-gray-700" />
+              ) : (
+                <Menu className="h-6 w-6 text-gray-700" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMobile && isMenuOpen && (
-          <div className="fixed inset-0 top-16 bg-white z-20 p-4">
+          <div className="fixed inset-0 top-16 bg-gradient-to-b from-white to-blue-50 z-20 p-4">
             <nav className="flex flex-col space-y-4">
               {navigationItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center p-3 rounded-md ${
+                  className={`flex items-center p-4 rounded-lg shadow-sm ${
                     isActive(item.path)
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+                      : "bg-white text-gray-700 hover:bg-gray-50"
                   }`}
                 >
                   <span className="mr-3">{item.icon}</span>
-                  <span>{item.name}</span>
+                  <span className="text-lg">{item.name}</span>
                 </Link>
               ))}
             </nav>
@@ -109,6 +163,7 @@ const Layout = () => {
         <Outlet />
       </main>
 
+      {/* Keep existing footer code */}
       <footer className="bg-gray-900 text-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -122,7 +177,7 @@ const Layout = () => {
               <h3 className="text-lg font-bold mb-3">Quick Links</h3>
               <ul className="space-y-2">
                 <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
-                <li><Link to="/dashboard" className="text-gray-400 hover:text-white">Dashboard</Link></li>
+                <li><Link to="/dashboard" className="text-gray-400 hover:text-white">Insights Center</Link></li>
                 <li><Link to="/wellness" className="text-gray-400 hover:text-white">Wellness Check</Link></li>
                 <li><Link to="/resources" className="text-gray-400 hover:text-white">Resources</Link></li>
               </ul>

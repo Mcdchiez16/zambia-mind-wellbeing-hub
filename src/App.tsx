@@ -12,6 +12,7 @@ import Resources from "./pages/Resources";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
+import ElevenLabsWidget from "./components/ElevenLabsWidget";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner position="bottom-right" className="toaster-custom" />
+        <ElevenLabsWidget />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>

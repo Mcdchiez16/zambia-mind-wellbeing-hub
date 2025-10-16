@@ -73,21 +73,21 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background">
       <Hero />
       
       {/* Stats Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-lg shadow-sm border border-blue-100">
+              <div key={index} className="bg-muted/50 p-6 rounded-lg shadow-sm border">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                    <h3 className="text-3xl font-bold text-gray-800 mt-1">{stat.value}</h3>
+                    <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
+                    <h3 className="text-3xl font-bold text-foreground mt-1">{stat.value}</h3>
                   </div>
-                  <div className={`flex items-center text-sm ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                  <div className={`flex items-center text-sm ${stat.trend === 'up' ? 'text-accent' : 'text-destructive'}`}>
                     {stat.trend === 'up' ? (
                       <TrendingUp className="h-4 w-4 mr-1" />
                     ) : (
@@ -105,14 +105,14 @@ const Index = () => {
       {/* Services Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12 max-w-3xl mx-auto">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-4">
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             <Check className="h-4 w-4 mr-1" />
             Supporting Mental Health Across Zambia
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Our Platform Services
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Our comprehensive approach provides real-time mental health trend analysis, resources, and personalized support for individuals, professionals, and organizations throughout Zambia.
           </p>
         </div>
@@ -134,44 +134,44 @@ const Index = () => {
       <section className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-sm font-medium mb-4">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
               <Award className="h-4 w-4 mr-1" />
               Our Approach
             </div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl font-bold text-foreground mb-6">
               Advanced Analytics for Mental Health Insights
             </h2>
             <div className="space-y-4">
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                  <Check className="h-4 w-4 text-green-600" />
+                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                  <Check className="h-4 w-4 text-accent" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-lg font-medium text-gray-800">Real-time Data Processing</h3>
-                  <p className="text-gray-600 mt-1">Our platform continuously processes mental health data from multiple sources across Zambia.</p>
+                  <h3 className="text-lg font-medium text-foreground">Real-time Data Processing</h3>
+                  <p className="text-muted-foreground mt-1">Our platform continuously processes mental health data from multiple sources across Zambia.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                  <Check className="h-4 w-4 text-green-600" />
+                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                  <Check className="h-4 w-4 text-accent" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-lg font-medium text-gray-800">Sentiment Analysis</h3>
-                  <p className="text-gray-600 mt-1">Advanced NLP techniques detect emotional states and mental health concerns from conversations.</p>
+                  <h3 className="text-lg font-medium text-foreground">Sentiment Analysis</h3>
+                  <p className="text-muted-foreground mt-1">Advanced NLP techniques detect emotional states and mental health concerns from conversations.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                  <Check className="h-4 w-4 text-green-600" />
+                <div className="flex-shrink-0 h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                  <Check className="h-4 w-4 text-accent" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-lg font-medium text-gray-800">Localized Resources</h3>
-                  <p className="text-gray-600 mt-1">Connect users with the nearest mental health support centers and professionals.</p>
+                  <h3 className="text-lg font-medium text-foreground">Localized Resources</h3>
+                  <p className="text-muted-foreground mt-1">Connect users with the nearest mental health support centers and professionals.</p>
                 </div>
               </div>
             </div>
             <div className="mt-8">
-              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 group">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 group">
                 <Link to="/dashboard" className="flex items-center">
                   View Live Dashboard
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -180,31 +180,31 @@ const Index = () => {
             </div>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-200/40 to-purple-200/40 rounded-xl transform rotate-3"></div>
-            <div className="relative bg-white shadow-lg rounded-xl p-6 border border-gray-200">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl transform rotate-3"></div>
+            <div className="relative bg-card shadow-lg rounded-xl p-6 border">
               <div className="space-y-4">
-                <div className="h-2 w-20 bg-blue-200 rounded-full"></div>
+                <div className="h-2 w-20 bg-primary/20 rounded-full"></div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="h-24 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                      <TrendingUp className="h-6 w-6 text-blue-600" />
+                  <div className="h-24 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
+                      <TrendingUp className="h-6 w-6 text-primary" />
                     </div>
                   </div>
-                  <div className="col-span-2 h-24 bg-purple-50 rounded-lg p-4">
-                    <div className="h-2 w-20 bg-purple-200 rounded-full mb-3"></div>
-                    <div className="h-2 w-32 bg-purple-100 rounded-full mb-2"></div>
-                    <div className="h-2 w-24 bg-purple-100 rounded-full"></div>
+                  <div className="col-span-2 h-24 bg-accent/10 rounded-lg p-4">
+                    <div className="h-2 w-20 bg-accent/30 rounded-full mb-3"></div>
+                    <div className="h-2 w-32 bg-accent/20 rounded-full mb-2"></div>
+                    <div className="h-2 w-24 bg-accent/20 rounded-full"></div>
                   </div>
                 </div>
                 
-                <div className="h-32 bg-gray-50 rounded-lg p-4">
-                  <div className="h-2 w-20 bg-gray-200 rounded-full mb-3"></div>
+                <div className="h-32 bg-muted/50 rounded-lg p-4">
+                  <div className="h-2 w-20 bg-muted-foreground/20 rounded-full mb-3"></div>
                   <div className="grid grid-cols-5 gap-2">
-                    <div className="bg-blue-100 h-16 rounded-md"></div>
-                    <div className="bg-green-100 h-12 rounded-md"></div>
-                    <div className="bg-yellow-100 h-20 rounded-md"></div>
-                    <div className="bg-purple-100 h-14 rounded-md"></div>
-                    <div className="bg-red-100 h-10 rounded-md"></div>
+                    <div className="bg-primary/20 h-16 rounded-md"></div>
+                    <div className="bg-accent/20 h-12 rounded-md"></div>
+                    <div className="bg-primary/30 h-20 rounded-md"></div>
+                    <div className="bg-accent/30 h-14 rounded-md"></div>
+                    <div className="bg-primary/25 h-10 rounded-md"></div>
                   </div>
                 </div>
               </div>
@@ -214,17 +214,17 @@ const Index = () => {
       </section>
       
       {/* Support Section */}
-      <section className="bg-blue-100 py-16">
+      <section className="bg-accent/5 py-16">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="md:w-1/2 mb-8 md:mb-0">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
                 Need Immediate Support?
               </h2>
-              <p className="text-lg text-gray-700 mb-6">
+              <p className="text-lg text-muted-foreground mb-6">
                 If you're experiencing a mental health crisis or need to talk to someone right now, help is available 24/7 throughout Zambia.
               </p>
-              <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 rounded-full">
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 rounded-full">
                 <Link to="/resources" className="flex items-center">
                   Find Help Now <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -232,27 +232,27 @@ const Index = () => {
             </div>
             <div className="md:w-1/2 md:pl-8">
               <Card className="border-0 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 rounded-t-lg">
+                <CardHeader className="bg-accent/10 rounded-t-lg">
                   <CardTitle>Emergency Hotlines</CardTitle>
                   <CardDescription>Available 24/7 for all Zambians</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <ul className="space-y-4">
-                    <li className="flex justify-between items-center p-2 hover:bg-gray-50 rounded">
+                    <li className="flex justify-between items-center p-2 hover:bg-muted/50 rounded">
                       <span className="font-medium">Zambia Mental Health Helpline:</span>
-                      <span className="font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full">116</span>
+                      <span className="font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">116</span>
                     </li>
-                    <li className="flex justify-between items-center p-2 hover:bg-gray-50 rounded">
+                    <li className="flex justify-between items-center p-2 hover:bg-muted/50 rounded">
                       <span className="font-medium">Crisis Text Line:</span>
-                      <span className="font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full">Text "HELP" to 5011</span>
+                      <span className="font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">Text "HELP" to 5011</span>
                     </li>
-                    <li className="flex justify-between items-center p-2 hover:bg-gray-50 rounded">
+                    <li className="flex justify-between items-center p-2 hover:bg-muted/50 rounded">
                       <span className="font-medium">Lifeline Zambia:</span>
-                      <span className="font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full">+260 211 123456</span>
+                      <span className="font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">+260 211 123456</span>
                     </li>
                   </ul>
                 </CardContent>
-                <CardFooter className="text-sm text-gray-500 bg-gray-50 rounded-b-lg">
+                <CardFooter className="text-sm text-muted-foreground bg-muted/50 rounded-b-lg">
                   These services are confidential and free of charge
                 </CardFooter>
               </Card>
@@ -264,14 +264,14 @@ const Index = () => {
       {/* Call to Action */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
             Join Us in Supporting Mental Health Awareness
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-muted-foreground mb-8">
             Whether you're seeking help, offering support, or analyzing data, our platform provides the tools and resources you need.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
               <Link to="/dashboard">
                 Explore Dashboard
               </Link>

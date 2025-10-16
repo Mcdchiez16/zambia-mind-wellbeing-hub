@@ -14,7 +14,6 @@ import SentimentChart from "@/components/charts/SentimentChart";
 import KeywordCloud from "@/components/charts/KeywordCloud";
 import EmotionDistribution from "@/components/charts/EmotionDistribution";
 import RegionalMap from "@/components/charts/RegionalMap";
-import ConversationSimulator from "@/components/ConversationSimulator";
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState<"day" | "week" | "month">("week");
@@ -22,21 +21,8 @@ const Dashboard = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [pulseEffect, setPulseEffect] = useState(false);
-  const [highRiskUsers, setHighRiskUsers] = useState<string[]>([]);
+  const [highRiskUsers] = useState<string[]>([]);
   const [newAlert, setNewAlert] = useState(true);
-
-  // Handle depression detection
-  const handleDepressionDetected = (message: any) => {
-    // In a real application, this would add the user to a monitoring list
-    const userId = `user-${Math.floor(Math.random() * 100)}`;
-    if (!highRiskUsers.includes(userId)) {
-      setHighRiskUsers(prev => [...prev, userId]);
-      toast.error(`Depression indicators detected from User ${userId.split('-')[1]}`, {
-        description: "This user has been added to the high-risk monitoring list.",
-        duration: 5000,
-      });
-    }
-  };
 
   // Simulate data refresh
   const refreshData = () => {
@@ -112,8 +98,8 @@ const Dashboard = () => {
     <div className="container mx-auto px-4 py-6 md:py-8 dark:bg-gray-950 transition-colors">
       <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
-            <span className="inline-flex mr-3 p-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center">
+            <span className="inline-flex mr-3 p-2 rounded-lg bg-primary text-white">
               <Brain className="h-6 w-6" />
             </span>
             Mental Health Insights Center
@@ -140,19 +126,19 @@ const Dashboard = () => {
             <Button
               variant="outline"
               size="sm"
-              className="bg-white/80 dark:bg-gray-800/80 border-gray-200 dark:border-gray-700"
+              className="bg-background border-border"
               onClick={() => setNewAlert(false)}
             >
-              <Bell className="h-4 w-4 mr-2 text-violet-500" />
+              <Bell className="h-4 w-4 mr-2 text-primary" />
               Notifications
               {newAlert && (
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-destructive rounded-full animate-pulse"></span>
               )}
             </Button>
           </div>
           
-          <div className="flex items-center text-sm bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/30 dark:to-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full shadow-sm border border-blue-100 dark:border-blue-800">
-            <Activity className="h-4 w-4 mr-1 text-green-600 dark:text-green-400" />
+          <div className="flex items-center text-sm bg-accent/10 text-accent-foreground px-3 py-1 rounded-full shadow-sm border border-accent/20">
+            <Activity className="h-4 w-4 mr-1 text-accent" />
             <span><span className="font-medium">2,547</span> active users</span>
           </div>
           
@@ -164,10 +150,10 @@ const Dashboard = () => {
           )}
           
           <Tabs value={timeRange} onValueChange={(v) => setTimeRange(v as "day" | "week" | "month")} className="w-full md:w-auto">
-            <TabsList className="grid w-full grid-cols-3 bg-violet-50 dark:bg-violet-900/30 p-1">
-              <TabsTrigger value="day" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-500 data-[state=active]:text-white">24 Hours</TabsTrigger>
-              <TabsTrigger value="week" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-500 data-[state=active]:text-white">7 Days</TabsTrigger>
-              <TabsTrigger value="month" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-500 data-[state=active]:text-white">30 Days</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-muted p-1">
+              <TabsTrigger value="day" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">24 Hours</TabsTrigger>
+              <TabsTrigger value="week" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">7 Days</TabsTrigger>
+              <TabsTrigger value="month" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">30 Days</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -176,30 +162,30 @@ const Dashboard = () => {
       {/* Key metrics cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {healthMetrics.map((metric, index) => (
-          <Card key={index} className="shadow-md border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900">
+          <Card key={index} className="card-hover shadow-md border overflow-hidden">
             <CardContent className="p-6 flex items-center space-x-4">
               <div className={`rounded-full p-3 ${
-                metric.title.includes("Index") ? "bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-400" :
-                metric.title.includes("Support") ? "bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400" :
-                metric.title.includes("Crisis") ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400" :
-                "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
+                metric.title.includes("Index") ? "bg-primary/10 text-primary" :
+                metric.title.includes("Support") ? "bg-accent/10 text-accent" :
+                metric.title.includes("Crisis") ? "bg-destructive/10 text-destructive" :
+                "bg-primary/10 text-primary"
               }`}>
                 <metric.icon className="h-6 w-6" />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{metric.title}</p>
+                <p className="text-sm font-medium text-muted-foreground">{metric.title}</p>
                 <div className="flex items-end">
-                  <h4 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{metric.value}</h4>
+                  <h4 className="text-2xl font-bold text-foreground">{metric.value}</h4>
                   <div className={`ml-2 flex items-center text-xs font-medium ${
                     metric.trend === "up" 
-                      ? metric.title.includes("Crisis") ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"
-                      : metric.title.includes("Crisis") ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+                      ? metric.title.includes("Crisis") ? "text-destructive" : "text-accent"
+                      : metric.title.includes("Crisis") ? "text-accent" : "text-destructive"
                   }`}>
                     {metric.trend === "up" ? <TrendingUp className="h-3 w-3 mr-0.5" /> : <TrendingDown className="h-3 w-3 mr-0.5" />}
                     {metric.change}
                   </div>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{metric.description}</p>
+                <p className="text-xs text-muted-foreground">{metric.description}</p>
               </div>
             </CardContent>
           </Card>
@@ -207,18 +193,18 @@ const Dashboard = () => {
       </div>
 
       {selectedRegion && (
-        <Alert className="mb-6 border-violet-500 bg-gradient-to-r from-violet-50 to-fuchsia-50 dark:from-violet-900/30 dark:to-fuchsia-800/20 dark:border-violet-800 shadow-md">
+        <Alert className="mb-6 border-primary bg-primary/5 shadow-md">
           <div className="flex items-center">
             <div className="mr-3">
-              <div className="h-10 w-10 rounded-full bg-violet-100 dark:bg-violet-900 flex items-center justify-center">
-                <Users className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users className="h-5 w-5 text-primary" />
               </div>
             </div>
             <div>
-              <AlertTitle className="text-violet-800 dark:text-violet-300 font-medium">Region Focus: {selectedRegion}</AlertTitle>
-              <AlertDescription className="text-violet-700 dark:text-violet-400">
+              <AlertTitle className="text-primary font-medium">Region Focus: {selectedRegion}</AlertTitle>
+              <AlertDescription className="text-muted-foreground">
                 Viewing mental health data specific to {selectedRegion}. 
-                <Button variant="link" className="p-0 h-auto text-violet-800 dark:text-violet-300 font-semibold" onClick={() => setSelectedRegion(null)}>
+                <Button variant="link" className="p-0 h-auto text-primary font-semibold" onClick={() => setSelectedRegion(null)}>
                   Clear Filter
                 </Button>
               </AlertDescription>
@@ -227,18 +213,18 @@ const Dashboard = () => {
         </Alert>
       )}
 
-      <Alert className="mb-6 border-yellow-500 bg-gradient-to-r from-yellow-50 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/20 dark:border-yellow-800 shadow-md">
+      <Alert className="mb-6 border-destructive bg-destructive/5 shadow-md">
         <div className="flex items-center">
           <div className="mr-3">
-            <div className="h-10 w-10 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
-              <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+            <div className="h-10 w-10 rounded-full bg-destructive/10 flex items-center justify-center">
+              <AlertTriangle className="h-5 w-5 text-destructive" />
             </div>
           </div>
           <div>
-            <AlertTitle className="text-yellow-800 dark:text-yellow-300 font-medium">Crisis Alert</AlertTitle>
-            <AlertDescription className="text-yellow-700 dark:text-yellow-400">
+            <AlertTitle className="text-destructive font-medium">Crisis Alert</AlertTitle>
+            <AlertDescription className="text-muted-foreground">
               Significant increase in anxiety-related terms in the Southern Province in the past 24 hours.
-              <Button variant="link" className="p-0 h-auto text-yellow-800 dark:text-yellow-300 font-semibold" onClick={() => setSelectedRegion("Southern Province")}>
+              <Button variant="link" className="p-0 h-auto text-destructive font-semibold" onClick={() => setSelectedRegion("Southern Province")}>
                 View Details
               </Button>
             </AlertDescription>
@@ -247,20 +233,20 @@ const Dashboard = () => {
       </Alert>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <Card className="shadow-md border-gray-200 bg-gradient-to-br from-white to-violet-50 dark:from-gray-900 dark:to-violet-950 dark:border-gray-800 overflow-hidden">
-          <CardHeader className="pb-4 border-b border-gray-100 dark:border-gray-800">
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center">
-                  <BarChart className="mr-2 h-5 w-5 text-violet-500" />
+                  <BarChart className="mr-2 h-5 w-5 text-primary" />
                   Sentiment Trends
                 </CardTitle>
-                <CardDescription className="dark:text-gray-400">
+                <CardDescription>
                   Positive, negative, and neutral sentiment across Zambia
                 </CardDescription>
               </div>
-              <div className="flex items-center text-sm font-medium px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full">
-                <TrendingUp className="mr-1 h-4 w-4 text-green-500 dark:text-green-400" />
+              <div className="flex items-center text-sm font-medium px-3 py-1 bg-accent/10 text-accent rounded-full">
+                <TrendingUp className="mr-1 h-4 w-4" />
                 <span>+12% positive</span>
               </div>
             </div>
@@ -270,20 +256,20 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-md border-gray-200 bg-gradient-to-br from-white to-fuchsia-50 dark:from-gray-900 dark:to-fuchsia-950 dark:border-gray-800 overflow-hidden">
-          <CardHeader className="pb-4 border-b border-gray-100 dark:border-gray-800">
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center">
-                  <Activity className="mr-2 h-5 w-5 text-fuchsia-500" />
+                  <Activity className="mr-2 h-5 w-5 text-primary" />
                   Emotional Tone Analysis
                 </CardTitle>
-                <CardDescription className="dark:text-gray-400">
+                <CardDescription>
                   Distribution of detected emotions in mental health conversations
                 </CardDescription>
               </div>
-              <div className="flex items-center text-sm font-medium px-3 py-1 bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 rounded-full">
-                <TrendingDown className="mr-1 h-4 w-4 text-amber-500 dark:text-amber-400" />
+              <div className="flex items-center text-sm font-medium px-3 py-1 bg-destructive/10 text-destructive rounded-full">
+                <TrendingDown className="mr-1 h-4 w-4" />
                 <span>+8% anxiety</span>
               </div>
             </div>
@@ -295,15 +281,15 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="lg:col-span-2 shadow-md border-gray-200 bg-gradient-to-br from-white to-green-50 dark:from-gray-900 dark:to-green-950 dark:border-gray-800 overflow-hidden">
-          <CardHeader className="pb-4 border-b border-gray-100 dark:border-gray-800">
+        <Card className="lg:col-span-2 card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center">
-                  <Activity className="mr-2 h-5 w-5 text-green-500" />
+                  <Activity className="mr-2 h-5 w-5 text-accent" />
                   Regional Mental Health Map
                 </CardTitle>
-                <CardDescription className="dark:text-gray-400">
+                <CardDescription>
                   Geographic distribution of mental health indicators
                 </CardDescription>
               </div>
@@ -317,7 +303,7 @@ const Dashboard = () => {
                   Clear Region Filter
                 </Button>
               ) : (
-                <div className="text-xs text-gray-500 dark:text-gray-400">Click on a region to focus</div>
+                <div className="text-xs text-muted-foreground">Click on a region to focus</div>
               )}
             </div>
           </CardHeader>
@@ -330,13 +316,13 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-md border-gray-200 bg-gradient-to-br from-white to-yellow-50 dark:from-gray-900 dark:to-yellow-950 dark:border-gray-800 overflow-hidden">
-          <CardHeader className="pb-4 border-b border-gray-100 dark:border-gray-800">
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
             <CardTitle className="flex items-center">
-              <MessageSquare className="mr-2 h-5 w-5 text-yellow-500" />
+              <MessageSquare className="mr-2 h-5 w-5 text-primary" />
               Trending Keywords
             </CardTitle>
-            <CardDescription className="dark:text-gray-400">
+            <CardDescription>
               Common topics in mental health discussions
             </CardDescription>
           </CardHeader>
@@ -346,32 +332,117 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Conversation simulator with improved UI */}
-      <Card className="mb-8 shadow-lg overflow-hidden border-violet-200 dark:border-violet-800">
-        <CardHeader className="pb-4 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-violet-50 to-fuchsia-50 dark:from-violet-950/50 dark:to-fuchsia-950/50">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-2 rounded-lg mr-3 text-white">
-                <MessageSquare className="h-5 w-5" />
+      {/* Additional Insights Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
+            <CardTitle className="flex items-center text-lg">
+              <Users className="mr-2 h-5 w-5 text-primary" />
+              Demographics
+            </CardTitle>
+            <CardDescription>Age and gender distribution</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6 space-y-4">
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">Ages 18-24</span>
+                <span className="font-medium">32%</span>
               </div>
-              <div>
-                <CardTitle>Conversation Sentiment Analyzer</CardTitle>
-                <CardDescription>Test the mental health detection system with sample conversations</CardDescription>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-primary h-2 rounded-full" style={{width: '32%'}}></div>
               </div>
             </div>
-            <Badge variant="outline" className="bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-300 border-violet-200 dark:border-violet-800">
-              AI-Powered
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="p-6">
-          <ConversationSimulator onDepressiveContentDetected={handleDepressionDetected} />
-        </CardContent>
-      </Card>
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">Ages 25-34</span>
+                <span className="font-medium">28%</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-primary h-2 rounded-full" style={{width: '28%'}}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">Ages 35-44</span>
+                <span className="font-medium">22%</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-primary h-2 rounded-full" style={{width: '22%'}}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">Ages 45+</span>
+                <span className="font-medium">18%</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-primary h-2 rounded-full" style={{width: '18%'}}></div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
+            <CardTitle className="flex items-center text-lg">
+              <Clock className="mr-2 h-5 w-5 text-accent" />
+              Response Times
+            </CardTitle>
+            <CardDescription>Average support response metrics</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
+              <span className="text-sm font-medium">Hotline</span>
+              <span className="text-lg font-bold text-accent">2.3 min</span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
+              <span className="text-sm font-medium">Chat Support</span>
+              <span className="text-lg font-bold text-accent">5.7 min</span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
+              <span className="text-sm font-medium">In-Person</span>
+              <span className="text-lg font-bold text-accent">24 hrs</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-hover shadow-md border overflow-hidden">
+          <CardHeader className="pb-4 border-b">
+            <CardTitle className="flex items-center text-lg">
+              <HeartPulse className="mr-2 h-5 w-5 text-primary" />
+              Outcomes
+            </CardTitle>
+            <CardDescription>Success rates and follow-ups</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6 space-y-4">
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className="text-sm text-muted-foreground">Successful Interventions</span>
+                <span className="text-sm font-bold text-accent">89%</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-accent h-2 rounded-full" style={{width: '89%'}}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className="text-sm text-muted-foreground">Follow-up Completed</span>
+                <span className="text-sm font-bold text-primary">76%</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2">
+                <div className="bg-primary h-2 rounded-full" style={{width: '76%'}}></div>
+              </div>
+            </div>
+            <div className="pt-2 border-t">
+              <p className="text-xs text-muted-foreground">1,247 lives impacted this month</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <div className="flex justify-end mt-6">
         <Button 
-          className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 flex items-center shadow-lg"
+          className="bg-primary hover:bg-primary/90 flex items-center shadow-lg"
           onClick={() => toast.success("Report download started!")}
         >
           <Download className="mr-2 h-4 w-4" />

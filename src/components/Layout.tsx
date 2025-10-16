@@ -74,16 +74,16 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-950 transition-colors">
-      <header className="border-b bg-gradient-to-r from-violet-700 to-fuchsia-700 dark:from-violet-900 dark:to-fuchsia-900 text-white sticky top-0 z-30 shadow-md">
+      <header className="border-b bg-gradient-to-r from-primary via-primary to-accent/90 dark:from-primary dark:to-accent/70 text-white sticky top-0 z-30 shadow-lg">
         <div className="container mx-auto px-4">
           {/* Motivational Quote Banner */}
           <div 
-            className={`bg-gradient-to-r from-violet-800/70 to-fuchsia-800/70 dark:from-violet-900/70 dark:to-fuchsia-900/70 backdrop-blur-md border-b border-white/10 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
+            className={`bg-primary/40 dark:bg-primary/30 backdrop-blur-md border-b border-white/10 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
           >
             <div className="flex items-center justify-center text-sm">
-              <Quote className="h-3 w-3 text-violet-200 mr-2 flex-shrink-0" />
+              <Quote className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
               <p className="text-white/90 italic">
-                "{currentQuote.text}" <span className="text-violet-200 not-italic">— {currentQuote.author}</span>
+                "{currentQuote.text}" <span className="text-accent/90 not-italic">— {currentQuote.author}</span>
               </p>
             </div>
           </div>
@@ -93,7 +93,7 @@ const Layout = () => {
               <Link to="/" className="flex items-center">
                 <div className="text-white font-bold text-xl flex items-center">
                   <span className="bg-white p-2 rounded-lg mr-2 flex items-center justify-center shadow-lg">
-                    <Brain className="h-5 w-5 text-violet-700 dark:text-violet-800" />
+                    <Brain className="h-5 w-5 text-primary" />
                   </span>
                   <span className="text-white">
                     Zambia Mind
@@ -106,7 +106,7 @@ const Layout = () => {
             <nav className="hidden md:flex items-center space-x-1">
               <Button 
                 variant="ghost" 
-                className="bg-violet-800/50 hover:bg-violet-800 text-white rounded-full flex items-center gap-2"
+                className="bg-accent/20 hover:bg-accent/30 text-white rounded-full flex items-center gap-2"
                 onClick={() => setShowHotline(!showHotline)}
               >
                 <Phone className="h-4 w-4 animate-pulse" />
@@ -119,7 +119,7 @@ const Layout = () => {
                   to={item.path}
                   className={`flex items-center text-sm font-medium rounded-full px-4 py-2 transition-all duration-300 ${
                     isActive(item.path)
-                      ? "bg-white text-violet-700 dark:bg-violet-900 dark:text-white shadow-md"
+                      ? "bg-white text-primary shadow-md"
                       : "text-white hover:bg-white/10"
                   }`}
                 >
@@ -165,7 +165,7 @@ const Layout = () => {
 
         {/* Mobile Navigation */}
         {isMobile && isMenuOpen && (
-          <div className="fixed inset-0 top-16 bg-gradient-to-b from-violet-700 to-fuchsia-800 dark:from-violet-900 dark:to-fuchsia-950 z-20 p-4">
+          <div className="fixed inset-0 top-16 bg-gradient-to-b from-primary to-accent/90 dark:from-primary dark:to-accent/70 z-20 p-4">
             <nav className="flex flex-col space-y-4">
               {navigationItems.map((item) => (
                 <Link
@@ -173,8 +173,8 @@ const Layout = () => {
                   to={item.path}
                   className={`flex items-center p-4 rounded-lg shadow-sm ${
                     isActive(item.path)
-                      ? "bg-white text-violet-700 dark:bg-gray-800 dark:text-white"
-                      : "bg-violet-600/50 text-white hover:bg-violet-600/70 dark:bg-violet-800/50 dark:hover:bg-violet-800/70"
+                      ? "bg-white text-primary dark:bg-card dark:text-white"
+                      : "bg-white/10 text-white hover:bg-white/20"
                   }`}
                 >
                   <span className="mr-3">{item.icon}</span>

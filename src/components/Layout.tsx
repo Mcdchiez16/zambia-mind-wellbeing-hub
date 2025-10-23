@@ -52,11 +52,6 @@ const Layout = () => {
 
   const navigationItems = [
     {
-      name: "Insights Center",
-      path: "/dashboard",
-      icon: <Brain className="h-5 w-5" />,
-    },
-    {
       name: "Wellness",
       path: "/wellness",
       icon: <HeartPulse className="h-5 w-5" />,
@@ -207,7 +202,6 @@ const Layout = () => {
               <h3 className="text-lg font-bold mb-3">Quick Links</h3>
               <ul className="space-y-2">
                 <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
-                <li><Link to="/dashboard" className="text-gray-400 hover:text-white">Insights Center</Link></li>
                 <li><Link to="/wellness" className="text-gray-400 hover:text-white">Wellness Check</Link></li>
                 <li><Link to="/resources" className="text-gray-400 hover:text-white">Resources</Link></li>
               </ul>

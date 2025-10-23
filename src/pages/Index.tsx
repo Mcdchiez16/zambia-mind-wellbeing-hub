@@ -26,12 +26,6 @@ const Index = () => {
 
   const services = [
     {
-      title: "Live Dashboard",
-      description: "Track real-time mental health sentiment trends across Zambia",
-      icon: <ChartBar className="h-6 w-6" />,
-      link: "/dashboard"
-    },
-    {
       title: "Personal Wellness",
       description: "Check your emotional state and get personalized coping strategies",
       icon: <HeartPulse className="h-6 w-6" />,
@@ -117,7 +111,7 @@ const Index = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <ServiceCard 
               key={index}
@@ -169,14 +163,6 @@ const Index = () => {
                   <p className="text-muted-foreground mt-1">Connect users with the nearest mental health support centers and professionals.</p>
                 </div>
               </div>
-            </div>
-            <div className="mt-8">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 group">
-                <Link to="/dashboard" className="flex items-center">
-                  View Live Dashboard
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
             </div>
           </div>
           <div className="relative">
@@ -271,14 +257,14 @@ const Index = () => {
             Whether you're seeking help, offering support, or analyzing data, our platform provides the tools and resources you need.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-              <Link to="/dashboard">
-                Explore Dashboard
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 shadow-lg">
               <Link to="/wellness">
                 Check Your Wellbeing
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-2 hover:bg-accent hover:text-accent-foreground">
+              <Link to="/resources">
+                Find Support Resources
               </Link>
             </Button>
           </div>

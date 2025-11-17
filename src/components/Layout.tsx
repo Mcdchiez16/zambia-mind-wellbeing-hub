@@ -86,13 +86,11 @@ const Layout = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
-                <div className="text-white font-bold text-xl flex items-center">
-                  <span className="bg-white p-2 rounded-lg mr-2 flex items-center justify-center shadow-lg">
+                <div className="text-primary-foreground font-bold text-xl flex items-center">
+                  <span className="bg-primary-foreground p-2 rounded-lg mr-2 flex items-center justify-center shadow-md">
                     <Brain className="h-5 w-5 text-primary" />
                   </span>
-                  <span className="text-white">
-                    Zambia Mind
-                  </span>
+                  <span>Zambia Mind</span>
                 </div>
               </Link>
             </div>

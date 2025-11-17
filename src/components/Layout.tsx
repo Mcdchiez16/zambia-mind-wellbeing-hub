@@ -69,16 +69,16 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-950 transition-colors">
-      <header className="border-b bg-gradient-to-r from-primary via-primary to-accent/90 dark:from-primary dark:to-accent/70 text-white sticky top-0 z-30 shadow-lg">
+      <header className="border-b bg-primary text-primary-foreground sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4">
           {/* Motivational Quote Banner */}
           <div 
-            className={`bg-primary/40 dark:bg-primary/30 backdrop-blur-md border-b border-white/10 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
+            className={`bg-primary-foreground/5 backdrop-blur-sm border-b border-primary-foreground/10 py-1 text-center transition-all duration-1000 overflow-hidden ${showQuote ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}
           >
             <div className="flex items-center justify-center text-sm">
               <Quote className="h-3 w-3 text-accent mr-2 flex-shrink-0" />
-              <p className="text-white/90 italic">
-                "{currentQuote.text}" <span className="text-accent/90 not-italic">— {currentQuote.author}</span>
+              <p className="text-primary-foreground/80 italic">
+                "{currentQuote.text}" <span className="text-accent not-italic">— {currentQuote.author}</span>
               </p>
             </div>
           </div>

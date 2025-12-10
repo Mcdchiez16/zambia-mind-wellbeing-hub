@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { HeartPulse, Map, Menu, X, Brain, Phone } from "lucide-react";
+import { HeartPulse, Map, Menu, X, Phone } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ThemeToggle from "@/components/ThemeToggle";
 import EmergencyHotline from "@/components/EmergencyHotline";
+import Logo from "@/components/Logo";
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,9 +43,7 @@ const Layout = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-primary-foreground">
-                <Brain className="h-5 w-5" />
-              </div>
+              <Logo size="sm" />
               <span className="font-semibold text-foreground text-lg">
                 Zambia Mind
               </span>
@@ -141,9 +140,7 @@ const Layout = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-primary-foreground">
-                  <Brain className="h-4 w-4" />
-                </div>
+                <Logo size="sm" />
                 <span className="font-semibold text-foreground">Zambia Mind</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">

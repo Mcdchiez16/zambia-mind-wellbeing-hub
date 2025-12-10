@@ -136,3 +136,18 @@
     }
   }
 }
+
+/* Hide ElevenLabs branding */
+elevenlabs-convai::part(branding),
+elevenlabs-convai [class*="powered"],
+elevenlabs-convai [class*="branding"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Additional attempt to hide via global styles */
+.elevenlabs-branding,
+[data-elevenlabs-branding],
+a[href*="elevenlabs.io"] {
+  display: none !important;
+}
